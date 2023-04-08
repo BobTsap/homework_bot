@@ -149,13 +149,17 @@ def main():
             response_homework = check_response(response)
 
             if response_homework:
+                logging.info('получение статуса домашней работы')
                 message = parse_status(response_homework)
 
-            if message != previous_message:
-                send_message(bot, message)
-                previous_message = message
+                if message != previous_message:
+                    send_message(bot, message)
+                    previous_message = message
+                else:
+                    logging.info('В ответе нет новых статусов')
+
             else:
-                logging.debug('В ответе нет новых статусов.')
+                logging.info('В ответе нет новых статусов')
 
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
